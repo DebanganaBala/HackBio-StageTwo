@@ -1,236 +1,111 @@
-# HackBio-StageTwo
-🧬 Single-Cell RNA-seq Analysis of Immune Cells (COVID-19 PBMC Dataset)
+README
+Single-Cell RNA-seq Analysis of Immune Cells (COVID-19 PBMC Dataset)
 
-This repository contains a full single-cell RNA-seq analysis pipeline applied to the dataset bone_marrow.h5ad using the notebook Single_Cell_Pipeline (2).ipynb.
-Despite the filename, metadata and cell composition show that the dataset is not bone marrow — it consists of PBMCs from COVID-19 patients (severe and remission states).
+This repository contains a single-cell RNA-seq analysis using the dataset bone_marrow.h5ad and the notebook Single_Cell_Pipeline (2).ipynb.
+Although the filename suggests bone marrow, metadata and cellular composition confirm the dataset contains PBMCs from COVID-19 patients.
 
-The pipeline performs preprocessing, QC, dimensionality reduction, clustering, marker identification, and cell-type annotation to produce biologically interpretable results.
+Project Structure
+- Single_Cell_Pipeline.ipynb
+- bone_marrow.h5ad
+- README.md
 
-🔧 Project Structure
-.
-├── Single_Cell_Pipeline (2).ipynb     # Main analysis notebook
-├── bone_marrow.h5ad                  # Input single-cell dataset (PBMC)
-└── README.md                         # Project documentation
+Dataset Overview
+- File: bone_marrow.h5ad
+- Number of cells: ~14,783
+- Data type: Single-cell RNA sequencing (UMI-based)
+- disease = "COVID-19"
+- COVID-19 Condition = ["severe", "remission"]
+- tissue = "blood"
+- tissue_original = "PBMC"
+- Cell.class_reannotated = curated fine-grained cell types
+- Lineage = broad lineage labels
 
-🧪 Dataset Overview
 
-File: bone_marrow.h5ad
-Cells: ~14,783
-Modality: scRNA-seq (UMI counts)
-Metadata fields include:
+These fields confirm the dataset is PBMC, not bone marrow.
 
-disease = "COVID-19"
+Pipeline Summary
+- Load dataset
+- Perform quality control (low gene count, high mitochondrial %, doublet removal)
+- Normalize and log-transform counts
+- Identify highly variable genes
+- Perform PCA
+- Build neighbor graph
+- Generate UMAP embedding
+- Run Leiden clustering
+- Identify marker genes
+- Annotate cell types
+- Summarize lineage-level distributions
 
-COVID-19 Condition = ["severe", "remission"]
-
-tissue = "blood"
-
-tissue_original = "PBMC"
-
-Cell.class_reannotated — curated fine-grained cell types
-
-Lineage — broad lineage categories
-
-Thus the dataset is PBMCs from COVID-19 patients, not bone marrow.
-
-📘 Pipeline Summary
-
-The notebook executes:
-
-Load & inspect metadata
-
-Quality control
-
-Remove low-gene cells, high-mito cells, doublets (Scrublet)
-
-Normalization & log transform
-
-Highly variable gene selection
-
-PCA → neighbors graph → UMAP
-
-Leiden clustering
-
-Differential expression
-
-Cell-type annotation
-
-Lineage-level summaries & marker visualization
-
-Outputs include QC plots, UMAPs, DE tables, dotplots, and annotated cluster assignments.
-
-🧫 Biological Interpretation
-
-Below are the required answers from the assignment (cell types, roles, tissue source, health state).
-
-1️⃣ What cell types were identified?
-
-Using Cell.class_reannotated, the following 18 cell types were identified:
-
+Biological Interpretation
+1. Identified Cell Types
 B lineage
+- B naive
+- B intermediate
+- B memory
+- Plasmablast
 
-B naive
-
-B intermediate
-
-B memory
-
-Plasmablast
-
-T & NK lineage
-
-CD4+ T naive
-
-CD4+ T central memory
-
-CD8+ T naive
-
-CD8+ T effector memory
-
-T/NK proliferative
-
-NK cells
+T and NK lineage
+- CD4+ T naive
+- CD4+ T central memory
+- CD8+ T naive
+- CD8+ T effector memory
+- T/NK proliferative
+- NK cells
 
 Myeloid lineage
-
-Classical monocytes
-
-Non-classical monocytes
-
-cDCs (conventional dendritic cells)
-
-pDCs (plasmacytoid dendritic cells)
-
-Granulocytic / progenitor / megakaryocytic
-
-Neutrophils
-
-Immature neutrophils
-
-HSPC (hematopoietic stem/progenitor cells)
-
-Platelets / megakaryocytic fragments
-
-2️⃣ Biological role of each cell type (concise definitions)
-
-B-lineage cells
-
-B naive: antigen-inexperienced B cells, ready to respond to new pathogens.
-
-B intermediate: activated/transitional B cells on the path to memory/plasma fate.
-
-B memory: long-lived antigen-experienced B cells enabling rapid secondary responses.
-
-Plasmablasts: short-lived antibody-producing B-cell descendants during active infection.
-
-T & NK cells
-
-CD4+ T naive: helper T-cell precursors awaiting antigen encounter.
-
-CD4+ Tcm: memory helper cells that coordinate secondary immune responses.
-
-CD8+ T naive: cytotoxic precursors that differentiate upon viral recognition.
-
-CD8+ Tem: circulating cytotoxic memory T cells capable of rapid effector functions.
-
-T/NK proliferative: cycling T/NK cells undergoing clonal expansion during infection.
-
-NK cells: innate cytotoxic cells that kill virally infected or stressed cells.
-
-Myeloid
-
-Classical monocytes: inflammatory monocytes that enter tissues and become macrophages/DCs.
-
-Non-classical monocytes: patrolling cells that survey vasculature and clear debris.
-
-cDCs: professional antigen-presenting cells that activate naive T cells.
-
-pDCs: major producers of type I interferons in viral infection.
-
-Granulocytic / progenitor
-
-Neutrophils: short-lived phagocytes and first responders to infection.
-
-Immature neutrophils: early granulocytic precursors, often seen in severe inflammation.
-
-HSPC: multipotent blood progenitors, typically residing in bone marrow.
-
-Platelets: megakaryocyte-derived fragments essential for clotting and inflammation.
-
-3️⃣ Is the tissue source really bone marrow?
-Conclusion: No — this is PBMC, not bone marrow.
-Biological evidence:
-⭐ Expected in bone marrow but missing here
-
-High abundance of HSC/MPP/CMP/GMP/MEP progenitors → not present
-
-Rich granulocytic maturation series (myelocytes, metamyelocytes) → almost entirely absent
-
-Large erythroid precursor compartment → completely absent
-
-⭐ Observed cell composition matches PBMC
-
-Dominance of mature lymphocytes (T, B, NK)
-
-Classical + non-classical monocytes present in typical PBMC proportions
-
-Neutrophils nearly absent (as expected with Ficoll prep)
-
-Only trace HSPCs and immature neutrophils
-
-⭐ Metadata says so directly
-
-tissue = "blood"
-
-tissue_original = "PBMC"
-
-The dataset layout, cell-type composition, and metadata all confirm this is peripheral blood mononuclear cells, not bone marrow.
-
-4️⃣ Based on cell-type abundances, is the patient healthy or infected?
-Conclusion: The patients are infected — consistent with COVID-19.
-Supporting evidence:
-🔹 Strong plasmablast expansion (~5.5%)
-
-Healthy PBMC typically show <1% plasmablasts.
-This is a hallmark of acute viral infection.
-
-🔹 Effector/memory T-cell dominance
-
-CD8+ Tem extremely high (~22%)
-
-Proliferating T/NK cluster present (~3.5%)
-
-Naive T cells depleted in severe condition
-
-This reflects antigen-driven activation and clonal expansion.
-
-🔹 Monocyte inflammation signature
-
-Classical monocytes nearly double in “severe” vs “remission”
-
-Non-classical monocytes reduced (common in inflammation)
-
-This is typical of systemic immune activation.
-
-🔹 Condition metadata
-
-Dataset includes two categories:
-
-"severe" COVID-19
-
-"remission" COVID-19
-
-The immunological pattern matches the expected COVID-19 response:
-plasmablast surge, inflammatory monocytes, activated cytotoxic lymphocytes, and platelet elevation.
-
-✔ Final Interpretation
-
-The dataset contains PBMCs, not bone marrow.
-
-The immune landscape clearly indicates infection, not a healthy baseline.
-
-Metadata confirms the disease is COVID-19, which is consistent with the observed immune signatures.
-
-📎 Citation / Attribution
-
-If you reuse this analysis, please cite this repository and the original dataset source if known.
+- Classical monocytes
+- Non-classical monocytes
+- Conventional dendritic cells (cDC)
+- Plasmacytoid dendritic cells (pDC)
+
+Granulocyte / progenitor / megakaryocyte lineage
+- Neutrophils
+- Immature neutrophils
+- Hematopoietic stem/progenitor cells (HSPC)
+- Platelets / megakaryocyte fragments
+
+2. Biological Roles of Each Cell Type
+B lineage
+- B naive: Antigen-inexperienced B cells.
+- B intermediate: Transitional or activated B cells.
+- B memory: Antigen-experienced long-lived B cells.
+- Plasmablasts: Antibody-producing cells during active infection.
+
+T and NK lineage
+- CD4+ T naive: Helper T precursors.
+- CD4+ T central memory: Memory helper cells.
+- CD8+ T naive: Cytotoxic T-cell precursors.
+- CD8+ T effector memory: Rapid-response cytotoxic cells.
+- T/NK proliferative: Actively dividing T or NK cells.
+- NK cells: Innate cytotoxic lymphocytes.
+
+Myeloid lineage
+- Classical monocytes: Inflammatory monocytes.
+- Non-classical monocytes: Patrolling vascular monocytes.
+- cDC: Professional antigen-presenting cells.
+- pDC: Type I interferon–producing viral sentinels.
+
+Granulocytic and progenitor lineage
+- Neutrophils: Phagocytic first responders.
+- Immature neutrophils: Granulocyte precursors.
+- HSPC: Multipotent stem/progenitor cells.
+- Platelets: Clotting and inflammatory mediators.
+
+3. Is the Tissue Source Bone Marrow?
+- Metadata indicates PBMC ("blood", "PBMC")
+- Bone marrow normally contains many progenitors and erythroid cells
+- These populations are almost absent
+- Dataset dominated by mature lymphocytes and monocytes
+- Neutrophils essentially absent due to Ficoll PBMC isolation
+- Conclusion: The dataset is PBMC, not bone marrow
+
+4. Is the Patient Healthy or Infected?
+- Plasmablasts strongly expanded (~5.5%), typical of infection
+- Large CD8 effector memory population (~22%)
+- Presence of proliferating T/NK cells indicates clonal expansion
+- Classical monocytes expanded, especially in severe samples
+- Non-classical monocytes reduced
+- Naive T cells depleted in severe condition
+- Platelet/megakaryocyte fragments elevated
+- Metadata labels all samples as COVID-19
+- Conclusion: The immune profile shows infection (COVID-19), not healthy baseline
