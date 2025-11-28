@@ -37,75 +37,18 @@ Pipeline Summary
 - Summarize lineage-level distributions
 
 Biological Interpretation
-1. Identified Cell Types
-B lineage
-- B naive
-- B intermediate
-- B memory
-- Plasmablast
+1. What cell types did you identify?
 
-T and NK lineage
-- CD4+ T naive
-- CD4+ T central memory
-- CD8+ T naive
-- CD8+ T effector memory
-- T/NK proliferative
-- NK cells
+The dataset contains the typical immune populations found in peripheral blood mononuclear cells (PBMCs). These include naive, memory, and intermediate B cells; plasmablasts; naive and central-memory CD4 T cells; naive and effector-memory CD8 T cells; natural killer (NK) cells; proliferating T/NK cells; classical CD14 monocytes; non-classical CD16 monocytes; conventional dendritic cells; plasmacytoid dendritic cells; rare mature neutrophils; rare immature neutrophils; platelets; and a small number of hematopoietic stem or progenitor–like cells. These identities are supported by the annotated metadata (Cell.group and Cell.class_reannotated) and confirmed by expected marker gene expression patterns visualized in UMAPs and heatmaps.
 
-Myeloid lineage
-- Classical monocytes
-- Non-classical monocytes
-- Conventional dendritic cells (cDC)
-- Plasmacytoid dendritic cells (pDC)
+2. Biological role of each cell type
 
-Granulocyte / progenitor / megakaryocyte lineage
-- Neutrophils
-- Immature neutrophils
-- Hematopoietic stem/progenitor cells (HSPC)
-- Platelets / megakaryocyte fragments
+Naive B cells are antigen-inexperienced lymphocytes that differentiate into antibody-producing cells after encountering a pathogen. Memory B cells are long-lived cells that respond rapidly during reinfection. Plasmablasts are highly secretory antibody-producing cells that expand dramatically during active viral infection. Naive CD4 T cells are helper T-cell precursors that differentiate after antigen presentation, while CD4 central-memory T cells provide long-term helper function. Naive CD8 T cells give rise to cytotoxic effector cells, and CD8 effector-memory T cells directly kill infected cells and produce antiviral cytokines. NK cells are innate cytotoxic lymphocytes that respond rapidly to infected or stressed cells without prior antigen exposure. Classical CD14 monocytes are inflammatory phagocytes that produce cytokines and contribute to pathogen recognition, whereas non-classical CD16 monocytes patrol the vasculature and respond to tissue damage. Conventional dendritic cells present antigens to T cells and initiate adaptive immunity, while plasmacytoid dendritic cells produce type I interferons during viral infection. Neutrophils are short-lived phagocytes that respond rapidly to inflammation. Platelets contribute to coagulation and also interact with innate immune pathways. The rare HSPC-like cells represent circulating progenitor cells occasionally found in blood.
 
-2. Biological Roles of Each Cell Type
-B lineage
-- B naive: Antigen-inexperienced B cells.
-- B intermediate: Transitional or activated B cells.
-- B memory: Antigen-experienced long-lived B cells.
-- Plasmablasts: Antibody-producing cells during active infection.
+3. Is the tissue source really bone marrow? Justify your answer.
 
-T and NK lineage
-- CD4+ T naive: Helper T precursors.
-- CD4+ T central memory: Memory helper cells.
-- CD8+ T naive: Cytotoxic T-cell precursors.
-- CD8+ T effector memory: Rapid-response cytotoxic cells.
-- T/NK proliferative: Actively dividing T or NK cells.
-- NK cells: Innate cytotoxic lymphocytes.
+The tissue is not bone marrow; it is PBMC. This is supported by both metadata and biological composition. The metadata fields tissue and tissue_original explicitly identify the sample as PBMC. The cellular composition confirms this: the dataset is dominated by mature T cells, B cells, NK cells, and monocytes, which is characteristic of PBMC. Bone marrow would instead contain abundant erythroid precursors, megakaryocyte progenitors, and a continuous granulocytic maturation hierarchy from myeloblasts through segmented neutrophils. These expected bone marrow lineages are absent. Neutrophils appear only as a tiny fraction, which is expected in PBMC because density-based isolation removes granulocytes. The dataset also contains only very rare hematopoietic progenitors, whereas bone marrow contains many such cells. Every line of evidence therefore supports that the tissue source is PBMC rather than bone marrow.
 
-Myeloid lineage
-- Classical monocytes: Inflammatory monocytes.
-- Non-classical monocytes: Patrolling vascular monocytes.
-- cDC: Professional antigen-presenting cells.
-- pDC: Type I interferon–producing viral sentinels.
+4. Based on the relative abundance of cell types, is the patient healthy or infected? Defend your conclusion.
 
-Granulocytic and progenitor lineage
-- Neutrophils: Phagocytic first responders.
-- Immature neutrophils: Granulocyte precursors.
-- HSPC: Multipotent stem/progenitor cells.
-- Platelets: Clotting and inflammatory mediators.
-
-3. Is the Tissue Source Bone Marrow?
-- Metadata indicates PBMC ("blood", "PBMC")
-- Bone marrow normally contains many progenitors and erythroid cells
-- These populations are almost absent
-- Dataset dominated by mature lymphocytes and monocytes
-- Neutrophils essentially absent due to Ficoll PBMC isolation
-- Conclusion: The dataset is PBMC, not bone marrow
-
-4. Is the Patient Healthy or Infected?
-- Plasmablasts strongly expanded (~5.5%), typical of infection
-- Large CD8 effector memory population (~22%)
-- Presence of proliferating T/NK cells indicates clonal expansion
-- Classical monocytes expanded, especially in severe samples
-- Non-classical monocytes reduced
-- Naive T cells depleted in severe condition
-- Platelet/megakaryocyte fragments elevated
-- Metadata labels all samples as COVID-19
-- Conclusion: The immune profile shows infection (COVID-19), not healthy baseline
+The patient is infected and shows clear signs of systemic inflammation. Severe cases in the dataset display an expansion of classical monocytes, which is a hallmark of inflammatory responses and cytokine-driven innate activation. Plasmablasts are also substantially increased, reflecting strong antibody-secreting activity characteristic of acute viral infection. Effector-memory CD8 T cells are elevated, indicating an active cytotoxic antiviral response. NK cell levels remain high, consistent with innate activation in viral disease. In contrast, naive CD4 T cells are sharply decreased in severe samples, a well-documented form of lymphopenia in COVID-19. Together, these shifts support that the immune system is responding to an ongoing infection rather than representing a healthy baseline.
