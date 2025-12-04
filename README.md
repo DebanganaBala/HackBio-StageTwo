@@ -1,4 +1,3 @@
-README
 Single-Cell RNA-seq Analysis of Immune Cells (COVID-19 PBMC Dataset)
 
 This repository contains a single-cell RNA-seq analysis using the dataset bone_marrow.h5ad and the notebook Single_Cell_Pipeline.ipynb.
